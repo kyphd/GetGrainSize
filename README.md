@@ -1,7 +1,7 @@
 # GetGrainSize
 [Material Science] Measure grain size based on the Heyn intercept method.
 
-![sample](https://github.com/kyphd/GetGrainSize/blob/master/output/000.tif)
+![sample](https://github.com/kyphd/GetGrainSize/blob/master/output/000.png)
 
 # About
 This program is to measure the grain size based on the Heyn intercept method [E. Heyn, The Metallographist, Vol. 5, 1903, pp. 39-64.]. A monochrome image file is required and grain boundary is described with black line. If you want, some images are randomly cropped, and measure the grain size for each cropped image.
