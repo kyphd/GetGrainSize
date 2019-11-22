@@ -6,7 +6,7 @@
 # About
 This program is to measure the grain size based on the Heyn intercept method [E. Heyn, The Metallographist, Vol. 5, 1903, pp. 39-64.]. A monochrome image file is required and grain boundary is described with black line. If you want, some images are randomly cropped, and measure the grain size for each cropped image.
 
-# Requre
+# Require
 ## python 3
 
 https://www.python.org/
