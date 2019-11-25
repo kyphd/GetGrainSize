@@ -24,7 +24,7 @@ You need to prepare the monochrome image file in which grain boundaries are show
 # Execute
 
 ```
-python getgrainsize.py -f <filename> -c -s <width> <height> -n <number>
+python getgrainsize.py -f <filename> -l <l> -c -s <width> <height> -n <n>
 ```
 
 Each option is separated by space. 
@@ -33,18 +33,20 @@ Each option is separated by space.
 
 -f \<filename\> : Image filename. \[mandatory\]
 
+-l \<l:int\> : Number of lines to measure grain size. \[mandatory\]
+
 -c : Crop mode. Some images are croped from image file randomely, and measure the grain size for each cropped file. \[optional\]
 
 -s \<width\> \<height\> : Width and height of cropped image. \[mandatory for crop mode (-c)\]
 
--n \<number\> : Number of crop images. \[mandatory for crop mode (-c)\]
+-n \<n\> : Number of crop images. \[mandatory for crop mode (-c)\]
 
 ## example 1
 
 To measure the grain size in sample.tif, run getgrainsize.py as follows.
 
 ```
-python getgrainsize.py -f sample.tif
+python getgrainsize.py -f sample.tif -l 5
 ```
 
 ## example 2
@@ -52,7 +54,7 @@ python getgrainsize.py -f sample.tif
 If you want 3 crop images (width and height is (200, 200)) from sample.tif, and want to measure each grain size, run as follows.
 
 ```
-python getgrainsize.py -f sample.tif -c -s 200 200 -n 3
+python getgrainsize.py -f sample.tif -l 5 -c -s 200 200 -n 3
 ```
 
 # output

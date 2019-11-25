@@ -11,20 +11,23 @@ import random
 ## constant ##
 DIRNAME = "output"
 RESULT_FILE = DIRNAME + "/result.dat"
-NUM_OF_LINES = 6
 CUTOFF = 2 * np.sqrt(2) + 0.001     # cutting distance for grouping boundary
 L_CONST = 1.13                      # D = L_CONST * l_ave
 
 
 ## function
+def usage():
+    print("Usage: ")
+    print(" python getgrainsize.py -f <filename>  -l <l:int> -c -s <x:int> <y:int> -n <n:int>")
+    print("  -f <filename>: filename of image (mandatory)")
+    print("  -l <l:int>: number of lines to measure grain size (mandatory)")
+    print("  -c: (optional) Crop mode. Images are randomly cropped from the original one. -s and -n are mandatory")
+    print("  -s <x:int> <y:int>: crop size of x and y axis (pixel)")
+    print("  -n <n:int>: number of crop images")
+
 def argumenterror():
     print("Arguments Error.")
-    print("Usage: ")
-    print(" python getgrainsize.py -f <filename> -c -s <x:int> <y:int> -n <n:int>")
-    print("  -f <filename>: filename of image (mandatory)")
-    print("  -c: (optional) if you want to crop images from the original one. -s and -n are mandatory")
-    print("  -s <x:int> <y:int>: crop size of x and y axis (pixel).")
-    print("  -n <n:int>: number of crop images.")
+    usage()
     sys.exit(1)
 
 
@@ -69,7 +72,7 @@ def cropimage(filename, xsize, ysize, cropnum):
 
 
 # measure grains size
-def grainsize(croppedlist):
+def grainsize(croppedlist, linenum):
 
     output("\n-- Measure Grain Size --")
 
@@ -87,7 +90,7 @@ def grainsize(croppedlist):
         # draw line
         # upper left is (0, 0)
         sum_d = 0.0
-        for l in range(NUM_OF_LINES):
+        for l in range(linenum):
 
             start = np.zeros(2, dtype=int)
             end = np.zeros(2, dtype=int)
@@ -196,7 +199,7 @@ def grainsize(croppedlist):
                 draw.ellipse((upperleft[0]-1, upperleft[1]-1, lowerright[0]+1, lowerright[1]+1), outline=(0, 0, 255))
 
         im.save(f)
-        ave_d = sum_d / NUM_OF_LINES
+        ave_d = sum_d / linenum
         output(" D_ave = " + str(ave_d) + " [px]\n")
 
 
@@ -214,6 +217,7 @@ if __name__ == "__main__":
     ysize = None
     cropnum = None
     isCrop = False
+    linenum = None
     try:
         for i in range(len(args)):
             if args[i] == "-f":
@@ -225,13 +229,17 @@ if __name__ == "__main__":
                 ysize = int(args[i+2])
             elif args[i] == "-n":
                 cropnum = int(args[i+1])
+            elif args[i] == "-l":
+                linenum = int(args[i+1])
+            elif args[i] == "-h":
+                usage()
+                sys.exit(0)
     except Exception as e:
         print(e)
         argumenterror()
 
-
     # check file existence
-    if not filename:
+    if not filename or not linenum:
         argumenterror()
     else:
         if not os.path.isfile(filename):
@@ -269,5 +277,5 @@ if __name__ == "__main__":
         imglist = cropimage(filename2, xsize, ysize, cropnum)
 
     # analize grain size
-    grainsize(imglist)
+    grainsize(imglist, linenum)
 
